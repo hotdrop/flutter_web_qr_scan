@@ -19,6 +19,7 @@ dependencies:
 
   # qr
   mobile_scanner: ^4.0.1
+  flutter_web_qrcode_scanner: ^1.1.1
 
   # firebase
   firebase_core: ^2.27.0

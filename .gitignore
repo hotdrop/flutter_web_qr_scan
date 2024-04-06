@@ -45,3 +45,5 @@ app.*.map.json
 # generate
 *.g.dart
 *.freezed.dart
+.firebase
+firebase.json
