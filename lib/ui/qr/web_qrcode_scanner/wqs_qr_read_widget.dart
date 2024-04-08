@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_web_qrcode_scanner/flutter_web_qrcode_scanner.dart';
 import 'package:pwa_qr_scan_test/ui/qr/qr_read_dialog.dart';
 
-class WqaQrReadScannerWidget extends StatefulWidget {
-  const WqaQrReadScannerWidget({super.key});
+class WqaQrReadWidget extends StatefulWidget {
+  const WqaQrReadWidget({super.key});
 
   @override
-  State<WqaQrReadScannerWidget> createState() => _WqaQrReadScannerWidgetState();
+  State<WqaQrReadWidget> createState() => _WqaQrReadWidgetState();
 }
 
-class _WqaQrReadScannerWidgetState extends State<WqaQrReadScannerWidget> {
+class _WqaQrReadWidgetState extends State<WqaQrReadWidget> {
   final CameraController _controller = CameraController(autoPlay: false);
 
   @override
@@ -20,19 +20,18 @@ class _WqaQrReadScannerWidgetState extends State<WqaQrReadScannerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        FlutterWebQrcodeScanner(
-          controller: _controller,
-          cameraDirection: CameraDirection.back,
-          onGetResult: (result) async {
-            _controller.stopVideoStream();
-            await QrReadDialog.show(context, result);
-            _controller.startVideoStream();
-          },
-          height: MediaQuery.of(context).size.height * 0.9,
-        ),
-      ],
+    return FlutterWebQrcodeScanner(
+      controller: _controller,
+      cameraDirection: CameraDirection.back,
+      onGetResult: (result) async {
+        if (result.isEmpty) {
+          return;
+        }
+        _controller.stopVideoStream();
+        await QrReadDialog.show(context, result);
+        _controller.startVideoStream();
+      },
+      height: MediaQuery.of(context).size.height * 0.9,
     );
   }
 

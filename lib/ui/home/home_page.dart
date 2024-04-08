@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pwa_qr_scan_test/res/app_theme.dart';
+import 'package:pwa_qr_scan_test/ui/qr/ai_barcode_scanner/abs_qr_read_widget.dart';
 import 'package:pwa_qr_scan_test/ui/qr/mobile_scanner/ms_qr_read_widget.dart';
 import 'package:pwa_qr_scan_test/ui/qr/qr_read_page.dart';
 import 'package:pwa_qr_scan_test/ui/qr/web_qrcode_scanner/wqs_qr_read_widget.dart';
@@ -32,7 +33,9 @@ class HomePage extends StatelessWidget {
               Center(child: _MobileScannerTestButton()),
               SizedBox(height: 32),
               Center(child: _WebQrcodeScannerTestButton()),
-              SizedBox(height: 16),
+              SizedBox(height: 32),
+              Center(child: _AiBarcodeScannerTestButton()),
+              SizedBox(height: 32),
             ],
           ),
         ),
@@ -49,7 +52,7 @@ class _MobileScannerTestButton extends StatelessWidget {
     return ElevatedButton.icon(
       icon: const Icon(Icons.qr_code, size: 32),
       onPressed: () {
-        QrReadPage.start(context, qrScanWidget: const MobileScannerQrWidget());
+        QrReadPage.start(context, qrScanWidget: const MsQrReadWidget());
       },
       label: const Padding(
         padding: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
@@ -67,11 +70,29 @@ class _WebQrcodeScannerTestButton extends StatelessWidget {
     return ElevatedButton.icon(
       icon: const Icon(Icons.qr_code, size: 32),
       onPressed: () {
-        QrReadPage.start(context, qrScanWidget: const WqaQrReadScannerWidget());
+        QrReadPage.start(context, qrScanWidget: const WqaQrReadWidget());
       },
       label: const Padding(
         padding: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
         child: Text('Futter Web Qrcode Scanner', style: TextStyle(fontSize: 20)),
+      ),
+    );
+  }
+}
+
+class _AiBarcodeScannerTestButton extends StatelessWidget {
+  const _AiBarcodeScannerTestButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton.icon(
+      icon: const Icon(Icons.qr_code, size: 32),
+      onPressed: () {
+        QrReadPage.start(context, qrScanWidget: const AbsQrReadWidget());
+      },
+      label: const Padding(
+        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+        child: Text('AI Barcode Scanner', style: TextStyle(fontSize: 20)),
       ),
     );
   }
