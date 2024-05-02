@@ -28,16 +28,20 @@ class _MsQrReadWidgetState extends State<MsQrReadWidget> {
     // アプリ起動後、初回画面起動の場合はカメラ機能が動作する。しかし一度本画面を閉じて再度画面を開くとカメラが起動しない。
     // ライブラリのissueに記載された通りライフサイクルによるバグのようで現在も解消されていない。したがって暫定的に以下の処理を実装する
     // ライブラリのバグが解消されたら必ず削除すること。
-    // これでもAndroidだと動かないのでだめ
-    Future<void>.delayed(const Duration(milliseconds: 500)).then((_) async {
-      await controller.switchCamera();
-      // フロントならバックにする
-      final state = controller.cameraFacingState.value;
-      if (state == CameraFacing.front) {
-        await Future<void>.delayed(const Duration(milliseconds: 500));
-        controller.switchCamera();
-      }
-      setState(() => _availableCamera = true);
+    // 2秒だとAndroidでも動く。1秒はダメ。このコードは怪しい
+    // ウィジェットのビルドが完了した後にコードを入れてみる
+    // このコードはiOSは除外
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future<void>.delayed(const Duration(milliseconds: 2000)).then((_) async {
+        await controller.switchCamera();
+        // フロントならバックにする
+        final state = controller.cameraFacingState.value;
+        if (state == CameraFacing.front) {
+          await Future<void>.delayed(const Duration(milliseconds: 500));
+          controller.switchCamera();
+        }
+        setState(() => _availableCamera = true);
+      });
     });
   }
 
@@ -64,21 +68,6 @@ class _MsQrReadWidgetState extends State<MsQrReadWidget> {
             controller.start();
           },
         ),
-        // IconButton(
-        //   tooltip: "Switch Camera",
-        //   onPressed: () => controller.switchCamera(),
-        //   icon: ValueListenableBuilder<CameraFacing>(
-        //     valueListenable: controller.cameraFacingState,
-        //     builder: (context, state, child) {
-        //       switch (state) {
-        //         case CameraFacing.front:
-        //           return const Icon(Icons.camera_front);
-        //         case CameraFacing.back:
-        //           return const Icon(Icons.camera_rear);
-        //       }
-        //     },
-        //   ),
-        // ),
       ],
     );
   }
