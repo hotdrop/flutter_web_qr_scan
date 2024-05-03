@@ -3,6 +3,9 @@ WebでQRコードのスキャンが可能かを検証するリポジトリです
 Firebase Hostingで動作確認しているため、試す場合は`flutterfire configure`コマンドで`firebase_options.dart`を作ってください。  
 また、この検証は2024年4月時点でのライブラリ情報で行っています。  
 
+# 動作確認する場合
+Firebase Hostingを使用しているので最初に`Flutterfire`コマンドで`firebase_options.dart`を作成してください。  
+
 # deploy command
 ```cmd
 firebase projects:list
