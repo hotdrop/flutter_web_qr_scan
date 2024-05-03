@@ -1,6 +1,7 @@
 # pwa_qr_scan_test
-WebでQRコードのスキャンが可能かを検証するリポジトリです。
-Firebase Hostingで動作確認しているため、試す場合は`flutterfire configure`コマンドで`firebase_options.dart`を作ってください。
+WebでQRコードのスキャンが可能かを検証するリポジトリです。  
+Firebase Hostingで動作確認しているため、試す場合は`flutterfire configure`コマンドで`firebase_options.dart`を作ってください。  
+また、この検証は2024年4月時点でのライブラリ情報で行っています。  
 
 # deploy command
 ```cmd
